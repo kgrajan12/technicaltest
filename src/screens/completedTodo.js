@@ -24,13 +24,13 @@ class CompletedTodo extends Component {
                     data={_.compact(todoData)}
                     renderItem={({ index, item }) => (
                         <View style={style.todoContainer}>
-                            <Text>{item.todo}{index}</Text>
+                            <Text>{item.todo}</Text>
                         </View>
                     )}
                     keyExtractor={(val, key) => key.toString()}
-                    renderHiddenItem={ ({ index }) => (
+                    renderHiddenItem={ ({ item }) => (
                         <View style={style.rowBack}>
-                            <Text style={style.complete} onPress={() => this.undo(index)}>UNDO</Text>
+                            <Text style={style.complete} onPress={() => this.undo(item.key)}>UNDO</Text>
                             {/* <Text>Right</Text> */}
                         </View>
                     )}

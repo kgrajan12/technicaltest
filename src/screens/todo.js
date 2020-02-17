@@ -17,7 +17,8 @@ class Todo extends Component {
     addToDo = () => {
         const { todo } = this.state;
         if(todo != '') {
-            this.props.add({todo, completed: false});
+            this.props.add({todo, completed: false, key: Date.now() });
+            this.setState({ todo: '' });
             alert('To-Do added!');
         } else {
             alert('You should enter To Do');
@@ -26,10 +27,12 @@ class Todo extends Component {
 
     complete = (todo) => {
         this.props.complete(todo);
-        alert(JSON.stringify(this.props.todo))
-        // alert('Your todo completed!');
+        alert('Your todo completed!');
     }
-    remove = (todo) => this.props.remove(todo)
+    remove = (todo) => {
+        this.props.remove(todo);
+        alert('Your todo is removed!');
+    }
 
     render() {
         const { todo } = this.state;
@@ -49,14 +52,14 @@ class Todo extends Component {
                     data={_.compact(todoData)}
                     renderItem={({ index, item }) => (
                         <View style={style.todoContainer}>
-                            <Text>{item.todo}{index}</Text>
+                            <Text>{item.todo}</Text>
                         </View>
                     )}
                     keyExtractor={(val, key) => key.toString()}
-                    renderHiddenItem={({ index }) => (
+                    renderHiddenItem={({ index, item }) => (
                         <View style={style.rowBack}>
-                            <Text style={style.complete} onPress={() => this.complete(index)}>COMPLETE</Text>
-                            <Text style={style.remove} onPress={() => this.remove(index)}>REMOVE</Text>
+                            <Text style={style.complete} onPress={() => this.complete(item.key)}>COMPLETE</Text>
+                            <Text style={style.remove} onPress={() => this.remove(item.key)}>REMOVE</Text>
                         </View>
                     )}
                     leftOpenValue={75}

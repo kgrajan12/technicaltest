@@ -7,9 +7,9 @@ const initialState = [];
 const todo = (state = initialState, action) => {
     switch (action.type) {
         case ADD: return [...state, action.payload];
-        case REMOVE: return _.compact(state.map((val, key) => key == action.payload ? undefined : val));
-        case COMPLETE: return _.compact(state.map((val, key) => key == action.payload ? { ...val, completed: true } : val));
-        case UNDOCOMPLETE: return _.compact(state.map((val, key) => key == action.payload ? { ...val, completed: false } : val));
+        case REMOVE: return _.compact(state.map(val => val.key == action.payload ? undefined : val));
+        case COMPLETE: return state.map(val => val.key == action.payload ? { ...val, completed: true } : val);
+        case UNDOCOMPLETE: return state.map(val => val.key == action.payload ? { todo: val.todo, completed: false } : val);
         default: return state;
     }
 }
